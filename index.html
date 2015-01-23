@@ -18,7 +18,8 @@
 	<script src="lib/reqwest.min.js"></script>
 	<script src="lib/leaflet/leaflet.js"></script>
 	<script src="lib/cluster/leaflet.markercluster.js"></script>	
-	<script src="Leaflet.Photo.js"></script>	
+	<script src="Leaflet.Photo.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 	<script>
 
 	var outdoors = L.tileLayer('http://api.tiles.mapbox.com/v4/slugis.25db57b7/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2x1Z2lzIiwiYSI6IlB5TlZENVUifQ.Z597Ia0qffZlYcGpbJtzTA'),
@@ -63,6 +64,21 @@
 			className: 'leaflet-popup-photo',
 			minWidth: 400
 		}).openPopup();
+	});
+	
+	var spooner = L.geoJson(null, {
+		style: function (feature) {
+		return {
+			color: "red",
+			fill: false,
+			opacity: 0.6,
+			clickable: false
+			};
+		}
+	});
+	$.getJSON("spooner.geojson", function (data) {
+	spooner.addData(data);
+	map.addLayer(spooner);
 	});
 
 	reqwest({
