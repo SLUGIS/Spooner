@@ -32,9 +32,6 @@
 		layers: [outdoors]
 	});
 
-	L.control.zoom({
-    	position:'bottomright'
-	}).addTo(map);
 	
 	var baseMaps = {
 		"Outdoors": outdoors,
@@ -50,6 +47,12 @@
 
 	var album = L.control.attribution().addTo(map);
 	album.addAttribution('<a href="https://plus.google.com/photos/100743205449794348841/albums/6107409309843920897">Original photo album</a>');
+	album.setPrefix("");
+	album.setPosition('bottomright');
+
+	L.control.zoom({
+    	position:'bottomright'
+	}).addTo(map);
 
 	var photoLayer = L.photo.cluster().on('click', function (evt) {
 		var photo = evt.layer.photo,
