@@ -11,6 +11,9 @@
 	<link rel="stylesheet" href="css/map.css" />
 </head>
 <body>
+
+
+
 	<div id="map"></div>
 	<script src="lib/reqwest.min.js"></script>
 	<script src="lib/leaflet/leaflet.js"></script>
@@ -18,15 +21,35 @@
 	<script src="Leaflet.Photo.js"></script>	
 	<script>
 
+	var outdoors = L.tileLayer('http://api.tiles.mapbox.com/v4/slugis.25db57b7/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2x1Z2lzIiwiYSI6IlB5TlZENVUifQ.Z597Ia0qffZlYcGpbJtzTA'),
+		afternoon   = L.tileLayer('http://api.tiles.mapbox.com/v4/slugis.da0a550c/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2x1Z2lzIiwiYSI6IlB5TlZENVUifQ.Z597Ia0qffZlYcGpbJtzTA'),
+		contrast   = L.tileLayer('http://api.tiles.mapbox.com/v4/slugis.6a32585c/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2x1Z2lzIiwiYSI6IlB5TlZENVUifQ.Z597Ia0qffZlYcGpbJtzTA');
+
 	var map = L.map('map', {
-		maxZoom: 18
+		zoomControl: false,
+		maxZoom: 18,
+		attributionControl: false,
+		layers: [outdoors]
 	});
 
-	L.tileLayer('http://api.tiles.mapbox.com/v4/slugis.25db57b7/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2x1Z2lzIiwiYSI6IlB5TlZENVUifQ.Z597Ia0qffZlYcGpbJtzTA').addTo(map);
+	L.control.zoom({
+    	position:'bottomright'
+	}).addTo(map);
+	
+	var baseMaps = {
+		"Outdoors": outdoors,
+		"Satellite": afternoon,
+		"High Contrast" : contrast
+	};
+
+	L.control.layers(baseMaps, null).addTo(map);
 
 	/* L.tileLayer('http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=norges_grunnkart&zoom={z}&x={x}&y={y}', {
 		attribution: '&copy; <a href="http://kartverket.no/">Kartverket</a>'
 	}).addTo(map); */
+
+	var album = L.control.attribution().addTo(map);
+	album.addAttribution('<a href="https://plus.google.com/photos/100743205449794348841/albums/6107409309843920897">Original photo album</a>');
 
 	var photoLayer = L.photo.cluster().on('click', function (evt) {
 		var photo = evt.layer.photo,
@@ -70,5 +93,9 @@
 	});
 
 	</script>
+	<!--
+	Ribbon code taken from: https://github.com/blog/273-github-ribbons
+	!-->
+	<a href="https://github.com/slugis"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
 </body>
 </html>
